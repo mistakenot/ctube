@@ -1,5 +1,5 @@
 ﻿var thumbnail = function(id) {
-    return "https://img.youtube.com/vi/" + id + "/3.jpg";
+    return "https://img.youtube.com/vi/" + id + "/1.jpg";
 }
 
 var VM = function() {
@@ -8,6 +8,7 @@ var VM = function() {
     self.nextVideos = ko.observableArray([]);
     self.topics = ko.observable([]);
     self.iframeUrl = ko.computed(() => "https://www.youtube.com/embed/" + self.currentVideo().id + "?autoplay=1&origin=http://example.com");
+    self.loading = ko.observable(true);
 
     self.toggleSubject = (topic) => {
         var topics = self.topics();
@@ -30,6 +31,8 @@ var VM = function() {
         var topics = self.topics().filter(t => t.isActive).map(t => t.label);
         var query = topics.reduce((s, v, i) => s + "topics=" + v + "&", "");
 
+        self.loading(true);
+
         $.getJSON(
             "Home/Load?" + query,
             (data, status, xhr) => {
@@ -42,6 +45,9 @@ var VM = function() {
             })
             .error((xhr, status, error) => {
                 console.error(error);
+            })
+            .then(() => {
+                self.loading(false);
             })
     }
 

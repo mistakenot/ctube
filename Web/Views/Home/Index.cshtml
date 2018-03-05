@@ -3,41 +3,58 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="row">
-        
-    <div class="col">
-        
-        <span>Select your topics:</span>
-        <ul class="nav nav-pills" data-bind="foreach: topics">
-            <a href="#" data-bind="click: $parent.toggleSubject">
-                <span 
-                    class="badge" 
-                    data-bind="text: label, css: { 'red': isActive }"></span>
-            </a>
-        </ul>
-    </div>
-        
-</div>
-
-<div class="row">
-    <div class="col">
-        <div class="jumbotron">
-        <iframe data-bind="attr: {src: iframeUrl}" id="ytplayer" type="text/html" width="640" height="360"
-                frameborder="0"></iframe>
+<section class="section">
+    <div class="row">
+        <div class="col-md-12">
+            <span>Select your topics:</span>
+            <ul class="nav nav-pills" data-bind="foreach: topics">
+                <a href="#" data-bind="click: $parent.toggleSubject">
+                    <span 
+                        class="badge" 
+                        data-bind="text: label, css: { 'red': isActive }"></span>
+                </a>
+            </ul>
         </div>
     </div>
-</div>
+</section>
 
-<div class="row">
-    <div class="col">
-        <ul data-bind="foreach: nextVideos" class="list-inline">
-            <li class="list-inline-item">
-                <div class="panel panel-default">
-                    <img data-bind="attr: {src: thumbnail(id)}"></img>
-                    <a href="#"><p data-bind="text: title, click: $parent.clickOnNextVideo"></p></a>
-                    <a><p href="//youtube.com/channel/" data-bind="text: channel"></p></a>
+<br />
+
+<section class="section">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card" style="width: 640px">
+                <iframe class="card-img-top" data-bind="attr: {src: iframeUrl}" id="ytplayer" type="text/html" width="640" height="360"
+                    frameborder="0"></iframe>
+                <div class="card-body">
+                    <button class="btn btn-primary">Skip</button>
                 </div>
-            </li>
-        </ul>
+            </div>
+        </div>
     </div>
-</div>
+</section>
+
+<br />
+
+<section class="section">
+    <div class="row" data-bind="if: !loading()">
+        <div data-bind="foreach: nextVideos">
+            <div class="col-md-3">
+                <div class="card">
+                    <img class="img-fluid" data-bind="attr: {src: thumbnail(id)}"></img>
+                    <div class="card-body">
+                        <a href="#">
+                            <h4 class="card-title" data-bind="text: title, click: $parent.clickOnNextVideo"></h4>
+                        </a>
+                        <a><p class="card-text" href="//youtube.com/channel/" data-bind="text: channel"></p></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" data-bind="if: loading()">
+        <div class="col-md-12">
+            <p>Loading...</p>
+        </div>
+    </div>
+</section>
