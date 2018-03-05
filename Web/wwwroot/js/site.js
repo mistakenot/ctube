@@ -1,8 +1,13 @@
-﻿var VM = function() {
+﻿var thumbnail = function(id) {
+    return "https://img.youtube.com/vi/" + id + "/3.jpg";
+}
+
+var VM = function() {
     var self = this;
-    self.currentVideo = ko.observable("testing");
+    self.currentVideo = ko.observable({id: "none"});
     self.nextVideos = ko.observableArray([]);
     self.topics = ko.observable([]);
+    self.iframeUrl = ko.computed(() => "https://www.youtube.com/embed/" + self.currentVideo().id + "?autoplay=1&origin=http://example.com");
 
     self.toggleSubject = (topic) => {
         var topics = self.topics();
@@ -18,7 +23,7 @@
     }
 
     self.clickOnNextVideo = (video) => {
-
+        self.currentVideo(video);
     }
 
     self.load = () => {
@@ -30,6 +35,10 @@
             (data, status, xhr) => {
                 console.info(data);
                 self.nextVideos(data.suggestions);
+
+                if (data.suggestions.length > 0) {
+                    self.currentVideo(data.suggestions[0]);
+                }
             })
             .error((xhr, status, error) => {
                 console.error(error);

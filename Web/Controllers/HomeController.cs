@@ -12,9 +12,6 @@ namespace Web.Controllers
 {
     public class HomeController : Controller
     {
-        private static readonly IEnumerable<string> AllTopics 
-            = new [] {"Physics", "Maths", "Econ", "Crypto", "Biology"};
-
         private readonly IVideoService _videoService;
         private readonly ILogger<HomeController> _logger;
 
@@ -43,13 +40,14 @@ namespace Web.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Topics() => Json(AllTopics);
+        public async Task<IActionResult> Topics() => Json(await _videoService.GetAllTopics());
 
         public async Task<IActionResult> Load(string[] topics)
         {
             _logger.LogInformation($"Loading videos for topics {string.Join(",", topics)}.");
 
-            var chosenTopics = topics == null || topics.Count() == 0 ? AllTopics.ToArray() : topics;
+            var allTopics = await _videoService.GetAllTopics();
+            var chosenTopics = topics == null || topics.Count() == 0 ? allTopics.ToArray() : topics;
             
             _logger.LogInformation($"Loading videos for chosen topics {string.Join(",", chosenTopics)}.");
 
@@ -58,7 +56,7 @@ namespace Web.Controllers
             var model = new IndexModel
             {
                 Suggestions = suggestions,
-                Topics = AllTopics.Select(t => new TopicModel {Label = t, IsActive = chosenTopics.Contains(t)})
+                Topics = allTopics.Select(t => new TopicModel {Label = t, IsActive = chosenTopics.Contains(t)})
             };
 
             _logger.LogInformation($"Returning {model.Suggestions.Count()} suggestions.");

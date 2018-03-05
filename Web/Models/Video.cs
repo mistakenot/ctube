@@ -5,6 +5,7 @@ namespace Web.Models
         public string Title { get; set; }
         public string Id { get; set; }
         public string Channel { get; set;}
+        public string ChannelId { get; set; }
         public string Topic { get; set; }
     }
 }

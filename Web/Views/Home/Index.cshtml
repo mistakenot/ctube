@@ -19,17 +19,20 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="jumbotron">
-        <h1 data-bind="text: currentVideo">Hello, world!</h1>
+        <iframe data-bind="attr: {src: iframeUrl}" id="ytplayer" type="text/html" width="640" height="360"
+                frameborder="0"></iframe>
         </div>
     </div>
 </div>
 
 <div class="row">
     <div class="col-xs-12">
-        <ul data-bind="foreach: nextVideos">
-            <li>
+        <ul data-bind="foreach: nextVideos" class="list-inline">
+            <li class="list-inline-item">
                 <div class="panel panel-default">
-                    <a href="#" data-bind="text: title, events: {click: 'alert()'}"></a> - <a href="//youtube.com/channel/" data-bind="text: channel"></a>
+                    <img data-bind="attr: {src: thumbnail(id)}"></img>
+                    <a href="#"><p data-bind="text: title, click: $parent.clickOnNextVideo"></p></a>
+                    <a><p href="//youtube.com/channel/" data-bind="text: channel"></p></a>
                 </div>
             </li>
         </ul>
