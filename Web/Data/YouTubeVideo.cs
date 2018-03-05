@@ -8,13 +8,14 @@ namespace Web.Data
 {
     public class YouTubeVideo
     {
-        public string Id { get; private set; }
-        public float Rating { get; private set; }
-        public TimeSpan Length { get; private set; }
-        public ulong? Views { get; private set; }
-        public IEnumerable<string> Tags { get; private set; }
-        public IEnumerable<string> MentionedVideos { get; private set; }
-        public IEnumerable<string> MendionedChannels { get; private set; }
+        public string Id { get; set; }
+        public string ChannelId { get; set; }
+        public float Rating { get; set; }
+        public TimeSpan Length { get; set; }
+        public ulong? Views { get; set; }
+        public IEnumerable<string> Tags { get; set; }
+        public IEnumerable<string> MentionedVideos { get; set; }
+        public IEnumerable<string> MendionedChannels { get; set; }
 
         public static YouTubeVideo From(Video item)
         {
@@ -37,7 +38,8 @@ namespace Web.Data
                 Length = TimeSpan.ParseExact(item.ContentDetails.Duration, @"'PT'mm'M'ss'S'", null),
                 Tags = item.Snippet.Tags,
                 MentionedVideos = mentionedVideos,
-                MendionedChannels = mentionedChannels
+                MendionedChannels = mentionedChannels,
+                ChannelId = item.Snippet.ChannelId
             };
 
             return video;
