@@ -3,7 +3,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-<section class="section">
+<!-- <section class="section">
     <div class="row">
         <div class="col-md-12">
             <span>Select your topics:</span>
@@ -16,9 +16,7 @@
             </ul>
         </div>
     </div>
-</section>
-
-<br />
+</section> -->
 
 <section class="section">
     <div class="row">
@@ -27,7 +25,23 @@
                 <iframe class="card-img-top" data-bind="attr: {src: iframeUrl}" id="ytplayer" type="text/html" width="640" height="360"
                     frameborder="0"></iframe>
                 <div class="card-body">
-                    <button class="btn btn-primary">Skip</button>
+                    <div class="row">
+                        <div class="col-md-1">
+                            Topics:
+                        </div>
+                        <div class="col-md-9">
+                            <ul class="nav nav-pills" data-bind="foreach: topics">
+                                <a href="#" data-bind="click: $parent.toggleSubject">
+                                    <span 
+                                        class="badge" 
+                                        data-bind="text: label, css: { 'red': isActive }"></span>
+                                </a>
+                            </ul>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-primary">Skip</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
