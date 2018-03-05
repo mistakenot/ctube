@@ -7,14 +7,21 @@ namespace Web.Services
 {
     public interface IVideoService
     {
-         Task<IEnumerable<Video>> GetSuggestions();
+         Task<IEnumerable<VideoModel>> GetSuggestions(IEnumerable<string> topics);
     }
 
     public class MockVideoService : IVideoService
     {
-        public Task<IEnumerable<Video>> GetSuggestions()
+        private static readonly IEnumerable<VideoModel> MockVideos = new []
         {
-            return Task.FromResult(Enumerable.Empty<Video>());
-        }
+            new VideoModel { Title = "Quantum Physics for Dummies", Id = "1", Channel = "A Channel", Topic = "Physics"},
+            new VideoModel { Title = "Particle Physics for Dummies", Id = "2", Channel = "A Channel", Topic = "Physics"},
+            new VideoModel { Title = "Biology Physics for Dummies", Id = "1", Channel = "A Channel", Topic = "Biology"},
+            new VideoModel { Title = "Bitcoin for dummies", Id = "1", Channel = "A Channel", Topic = "Crypto"}
+        };
+
+        public Task<IEnumerable<VideoModel>> GetSuggestions(IEnumerable<string> topics) 
+            => Task.FromResult(
+                MockVideos.Where(v => topics.Any(t => t.Equals(v.Topic))));
     }
 }
