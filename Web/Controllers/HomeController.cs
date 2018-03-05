@@ -47,6 +47,16 @@ namespace Web.Controllers
             _logger.LogInformation($"Loading videos for topics {string.Join(",", topics)}.");
 
             var allTopics = await _videoService.GetAllTopics();
+
+            if (!topics.Any())
+            {
+                return Json(new IndexModel
+                {
+                    Suggestions = Enumerable.Empty<VideoModel>(),
+                    Topics = allTopics.Select(t => new TopicModel {Label = t, IsActive = false})
+                });
+            }
+
             var chosenTopics = topics == null || topics.Count() == 0 ? allTopics.ToArray() : topics;
             
             _logger.LogInformation($"Loading videos for chosen topics {string.Join(",", chosenTopics)}.");

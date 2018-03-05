@@ -13,6 +13,7 @@ using Google.Apis.Auth.OAuth2;
 using Google.Apis.YouTube.v3;
 using System.Threading;
 using Web.Services;
+using Microsoft.Extensions.Configuration.UserSecrets;
 
 namespace Web
 {
