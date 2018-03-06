@@ -22,28 +22,32 @@ namespace Tests
         {
             var video = new YouTubeVideo()
             {
+                Id = "id",
                 MentionedVideos = new [] { "mentioned_id" }
             };
 
             var linkedVideo = new YouTubeVideo()
             {
-                Id = "mentioned_id"
+                Id = "mentioned_id",
+                MentionedVideos = Enumerable.Empty<string>()
             };
 
-            var youtubeMock = new Mock<IYouTubeService>();
+            var youtubeMock = new Mock<IYouTubeApi>();
             youtubeMock
                 .Setup(s => s.GetVideoById("mentioned_id"))
                 .Returns(Task.FromResult(linkedVideo));
 
-            var db = new DatabaseContext();
+            var dbMock = new Mock<IRepository<YouTubeVideo>>();
 
             var crawler = new CrawlerService(
-                youtubeMock.Object, 
-                db);
+                youtubeMock.Object,
+                dbMock.Object);
 
             await crawler.Crawl(video, 1);
 
-            Assert.Equal(2, db.YouTubeVideos.Count());
+            youtubeMock.Verify(m => m.GetVideoById("mentioned_id"));
+            dbMock.Verify(m => m.Set(video, "id"));
+            dbMock.Verify(m => m.Set(linkedVideo, "mentioned_id"));
         }
     }
 }

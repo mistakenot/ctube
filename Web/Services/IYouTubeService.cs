@@ -4,7 +4,7 @@ using Web.Data;
 
 namespace Web.Services
 {
-    public interface IYouTubeService
+    public interface IYouTubeApi
     {
          Task<YouTubeVideo> GetVideoById(string id);
          

@@ -10,6 +10,9 @@
     <PackageReference Include="Google.Apis.YouTube.v3" Version="1.32.2.1131" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.1" />
+    <PackageReference Include="MongoDB.Bson" Version="2.5.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.5.0" />
+    <PackageReference Include="MongoDB.Driver.Core" Version="2.5.0" />
   </ItemGroup>
 
   <ItemGroup>

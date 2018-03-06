@@ -8,11 +8,11 @@ using Web.Data;
 
 namespace Web.Services
 {
-    public class DefaultYouTubeService : IYouTubeService
+    public class YouTubeApi : IYouTubeApi
     {
         private readonly YouTubeService _service;
 
-        public DefaultYouTubeService(string apiKey)
+        public YouTubeApi(string apiKey)
         {
             _service = new YouTubeService(new BaseClientService.Initializer()
             {
