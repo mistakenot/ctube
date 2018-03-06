@@ -26,7 +26,7 @@ namespace Web.Data
         [BsonElement]
         public IEnumerable<string> MendionedChannels { get; set; }
         [BsonElement]
-        public DateTime CreateAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         
 
         public static YouTubeVideo From(Video item)

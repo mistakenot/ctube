@@ -66,5 +66,15 @@ namespace Web.Services
                 _logger.LogInformation($"Found video id {video.Id} in database. Not creating.");
             }
         }
+
+        public async Task CrawlChannelAsync(string channelId, int depth)
+        {
+            var channelVideos = await _youtubeService.GetVideoIdsByChannelId(channelId);
+
+            foreach (var id in channelVideos)
+            {
+                await Crawl(id, depth);
+            }
+        }
     }
 }

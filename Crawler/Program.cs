@@ -37,7 +37,10 @@ namespace Crawler
                     var crawler = new CrawlerService(
                         new YouTubeApi(
                             apiKey),
-                        new MockRepository<YouTubeVideo>(),
+                        new MongoRepository<YouTubeVideo>(
+                            connectionStringArg.Value(),
+                            "testdb",
+                            "videos"),
                         logger);
 
                     logger.LogInformation($"Starting crawler...");

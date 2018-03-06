@@ -8,6 +8,6 @@ namespace Web.Services
     {
          Task<YouTubeVideo> GetVideoById(string id);
          
-         Task<IEnumerable<YouTubeVideo>> GetVideosByChannelId(string id);
+         Task<IEnumerable<string>> GetVideoIdsByChannelId(string id);
     }
 }

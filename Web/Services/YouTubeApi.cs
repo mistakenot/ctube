@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +10,7 @@ namespace Web.Services
 {
     public class YouTubeApi : IYouTubeApi
     {
+        private const string Part = "id,snippet,statistics,contentDetails";
         private readonly YouTubeService _service;
 
         public YouTubeApi(string apiKey)
@@ -23,7 +24,7 @@ namespace Web.Services
 
         public async Task<YouTubeVideo> GetVideoById(string id)
         {
-            var request = _service.Videos.List("id,snippet,statistics,contentDetails");
+            var request = _service.Videos.List(Part);
             request.Id = id;
             var result = await request.ExecuteAsync();
             var video = YouTubeVideo.From(result.Items.Single());
@@ -31,9 +32,15 @@ namespace Web.Services
             return video;
         }
 
-        public async Task<IEnumerable<YouTubeVideo>> GetVideosByChannelId(string id)
+        public async Task<IEnumerable<string>> GetVideoIdsByChannelId(string id)
         {
-            throw new NotImplementedException();
+            var request = _service.Search.List("id");
+            request.ChannelId = id;
+
+            var result = await request.ExecuteAsync();
+            var ids = result.Items.Select(sr => sr.Id.VideoId);
+            
+            return ids;
         }
     }
 }

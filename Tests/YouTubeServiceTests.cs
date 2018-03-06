@@ -56,15 +56,12 @@ namespace Tests
 
         private static YouTubeService CreateService()
         {
-            var config = new ConfigurationBuilder()
-                            .AddUserSecrets<Startup>()
-                            .Build();
-
             var service = new YouTubeService(new BaseClientService.Initializer()
             {
-                ApiKey = config["YoutubeApiKey"] ?? throw new ArgumentException("API key not set."),
+                ApiKey = Utils.ReadYouTubeApiKeyFromUserSecrets(),
                 ApplicationName = "coffeetube"
             });
+            
             return service;
         }
 
